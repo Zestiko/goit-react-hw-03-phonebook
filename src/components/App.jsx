@@ -5,7 +5,6 @@ import { Contacts } from "./Contacts/Contacts";
 import { Filter } from "./Filter/Filter";
 
 
-
 export class App extends Component {
   state = {
     contacts: [
@@ -17,6 +16,21 @@ export class App extends Component {
     filter: '',
   }
   
+  componentDidMount() {
+    const contactsFromLocalStorage = JSON.parse(localStorage.getItem("contactsData"));
+    console.log(contactsFromLocalStorage)
+    if (contactsFromLocalStorage) {
+      this.setState({contacts:contactsFromLocalStorage })
+    }
+  }
+
+  componentDidUpdate(_, prevState) {
+    const { contacts } = prevState;
+    if (contacts.length !== 0 && contacts.length!== this.state.contacts.length) {
+      localStorage.setItem("contactsData", JSON.stringify(this.state.contacts))
+    }
+  }
+
   onSubmiHandler = (name, number) => {
     const contact = {
       id: nanoid(),
@@ -59,8 +73,8 @@ export class App extends Component {
     
     <h2>Contacts</h2>
     <Filter value={filter} onChange={this.handelChange }/>
-    <Contacts contacts={ filterContacts} onDelete={this.handleDelete} />
- 
+    <Contacts contacts={filterContacts} onDelete={this.handleDelete} />
+     
   </>
   );
  }
