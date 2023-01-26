@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import { nanoid } from 'nanoid';
 import PropTypes from 'prop-types';
 
@@ -8,42 +8,44 @@ export class Form extends Component {
     number: '',
   };
 
-  handelChange = (e) => {
+  handelChange = e => {
     const { name, value } = e.target;
-    this.setState({ [name]: value })
+    this.setState({ [name]: value });
   };
 
-
-  handelSubmit = (e) => {
+  handelSubmit = e => {
     e.preventDefault();
     const { name, number } = this.state;
-    this.props.onSubmit(name, number)
+    this.props.onSubmit(name, number);
 
-    this.reset()
+    this.reset();
   };
 
   reset = () => {
-    this.setState({ name: '', number: '' })
+    this.setState({ name: '', number: '' });
   };
 
-  render() { 
+  render() {
     const inputNameId = nanoid();
     const inputTelId = nanoid();
     const { name, number } = this.state;
-    return <form onSubmit={this.handelSubmit}>
-      <label htmlFor={inputNameId}>Name
-        <input
-        id={inputNameId}
-        onChange={this.handelChange}
-        value={name}
-        type="text"
-        name="name"
-        pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-        title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-        required
-        />
-      </label>
-        <label htmlFor={inputTelId}>Number
+    return (
+      <form onSubmit={this.handelSubmit}>
+        <label htmlFor={inputNameId}>
+          Name
+          <input
+            id={inputNameId}
+            onChange={this.handelChange}
+            value={name}
+            type="text"
+            name="name"
+            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+            required
+          />
+        </label>
+        <label htmlFor={inputTelId}>
+          Number
           <input
             id={inputTelId}
             onChange={this.handelChange}
@@ -54,14 +56,13 @@ export class Form extends Component {
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             required
           />
-      </label>
-      <button type="submit" >Add contac</button>
-  </form>
-    
-        
+        </label>
+        <button type="submit">Add contac</button>
+      </form>
+    );
   }
 }
 
 Form.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-}
+};
